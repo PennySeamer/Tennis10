@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.29326.143
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tennis10", "Tennis10.csproj", "{211B9AA5-57BB-4F6A-8CE6-5D33DC30BA3D}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{211B9AA5-57BB-4F6A-8CE6-5D33DC30BA3D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{211B9AA5-57BB-4F6A-8CE6-5D33DC30BA3D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{211B9AA5-57BB-4F6A-8CE6-5D33DC30BA3D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{211B9AA5-57BB-4F6A-8CE6-5D33DC30BA3D}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {302A6CAD-0397-4B19-AC05-2810948F1FF6}
+	EndGlobalSection
+EndGlobal
