@@ -20,6 +20,7 @@ namespace Tennis10.Data
         public virtual DbSet<Schedule> Schedule { get; set; }
         public virtual DbSet<ScheduleMembers> ScheduleMembers { get; set; }
 
+
     }
 
 }
