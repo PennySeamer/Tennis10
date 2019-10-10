@@ -12,6 +12,9 @@ using Tennis10.Data;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc.Authorization;
 
 namespace Tennis10
 {
@@ -34,8 +37,30 @@ namespace Tennis10
                 .AddEntityFrameworkStores<ApplicationDbContext>();
             services.AddControllersWithViews();
             services.AddRazorPages();
-        }
 
+            services.AddSession(options =>
+                {
+                // Set a short timeout for easy testing.
+                options.IdleTimeout = TimeSpan.FromSeconds(600);
+                    options.Cookie.HttpOnly = true;
+                // Make the session cookie essential
+                options.Cookie.IsEssential = true;
+                });
+            services.AddMvc(obj =>
+            {
+                var policy = new AuthorizationPolicyBuilder()
+                .RequireAuthenticatedUser()
+                .Build();
+                obj.Filters.Add(new AuthorizeFilter(policy));
+            });
+
+            services.Configure<AuthorizationOptions>(options =>
+            {
+                options.AddPolicy("COACH", policy => policy.RequireUserName("boris@tennis.com"));
+            });
+
+            services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
+        }
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
