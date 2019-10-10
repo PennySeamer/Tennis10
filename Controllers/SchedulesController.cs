@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
@@ -11,23 +10,22 @@ using Tennis10.Models;
 
 namespace Tennis10.Controllers
 {
-    public class CoachesController : Controller
+    public class SchedulesController : Controller
     {
         private readonly ApplicationDbContext _context;
 
-        public CoachesController(ApplicationDbContext context)
+        public SchedulesController(ApplicationDbContext context)
         {
             _context = context;
         }
 
-        // GET: Coaches
-  
+        // GET: Schedules
         public async Task<IActionResult> Index()
         {
-            return View(await _context.Coach.ToListAsync());
+            return View(await _context.Schedule.ToListAsync());
         }
 
-        // GET: Coaches/Details/5
+        // GET: Schedules/Details/5
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -35,40 +33,39 @@ namespace Tennis10.Controllers
                 return NotFound();
             }
 
-            var coach = await _context.Coach
+            var schedule = await _context.Schedule
                 .FirstOrDefaultAsync(m => m.Id == id);
-            if (coach == null)
+            if (schedule == null)
             {
                 return NotFound();
             }
 
-            return View(coach);
+            return View(schedule);
         }
 
-        // GET: Coaches/Create
+        // GET: Schedules/Create
         public IActionResult Create()
         {
             return View();
         }
 
-        // POST: Coaches/Create
+        // POST: Schedules/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Email,Biography,PhotoUrl")] Coach coach)
+        public async Task<IActionResult> Create([Bind("Id,When,Description,CoachEmail,Location")] Schedule schedule)
         {
             if (ModelState.IsValid)
             {
-                _context.Add(coach);
+                _context.Add(schedule);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            return View(coach);
+            return View(schedule);
         }
 
-        // GET: Coaches/Edit/5
-
+        // GET: Schedules/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -76,22 +73,22 @@ namespace Tennis10.Controllers
                 return NotFound();
             }
 
-            var coach = await _context.Coach.FindAsync(id);
-            if (coach == null)
+            var schedule = await _context.Schedule.FindAsync(id);
+            if (schedule == null)
             {
                 return NotFound();
             }
-            return View(coach);
+            return View(schedule);
         }
 
-        // POST: Coaches/Edit/5
+        // POST: Schedules/Edit/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Email,Biography,PhotoUrl")] Coach coach)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,When,Description,CoachEmail,Location")] Schedule schedule)
         {
-            if (id != coach.Id)
+            if (id != schedule.Id)
             {
                 return NotFound();
             }
@@ -100,12 +97,12 @@ namespace Tennis10.Controllers
             {
                 try
                 {
-                    _context.Update(coach);
+                    _context.Update(schedule);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!CoachExists(coach.Id))
+                    if (!ScheduleExists(schedule.Id))
                     {
                         return NotFound();
                     }
@@ -116,10 +113,10 @@ namespace Tennis10.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            return View(coach);
+            return View(schedule);
         }
 
-        // GET: Coaches/Delete/5
+        // GET: Schedules/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -127,30 +124,30 @@ namespace Tennis10.Controllers
                 return NotFound();
             }
 
-            var coach = await _context.Coach
+            var schedule = await _context.Schedule
                 .FirstOrDefaultAsync(m => m.Id == id);
-            if (coach == null)
+            if (schedule == null)
             {
                 return NotFound();
             }
 
-            return View(coach);
+            return View(schedule);
         }
 
-        // POST: Coaches/Delete/5
+        // POST: Schedules/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var coach = await _context.Coach.FindAsync(id);
-            _context.Coach.Remove(coach);
+            var schedule = await _context.Schedule.FindAsync(id);
+            _context.Schedule.Remove(schedule);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
-        private bool CoachExists(int id)
+        private bool ScheduleExists(int id)
         {
-            return _context.Coach.Any(e => e.Id == id);
+            return _context.Schedule.Any(e => e.Id == id);
         }
     }
 }

@@ -56,6 +56,7 @@ namespace Tennis10
 
             services.Configure<AuthorizationOptions>(options =>
             {
+                options.AddPolicy("ADMIN", policy => policy.RequireUserName("admin@tennis.com"));
                 options.AddPolicy("COACH", policy => policy.RequireUserName("boris@tennis.com"));
             });
 
