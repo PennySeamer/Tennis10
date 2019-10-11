@@ -6,10 +6,11 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h1>Index</h1>
+<h1>Coaches</h1>
 
 <p>
-    <a asp-action="Create">Create New</a>
+    @if ((await AuthorizationService.AuthorizeAsync(User, "ADMIN")).Succeeded) { 
+        <a asp-action="Create">Add new Coach</a>}
 </p>
 <table class="table">
     <thead>
@@ -40,14 +41,15 @@
                     @Html.DisplayFor(modelItem => item.PhotoUrl)
                 </td>
                 <td>
-                    @if ((await AuthorizationService.AuthorizeAsync(User, "ADMIN","COACH")).Succeeded)
-                    {
+                    @if ((await AuthorizationService.AuthorizeAsync(User, "ADMIN")).Succeeded)
+                     
+                        {
 
-                        <a asp-action="Edit" asp-route-id="@item.Id">Edit</a>
-                        <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
-                    }
-                    <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
-                </td>
+                            <a asp-action="Edit" asp-route-id="@item.Id">Edit</a>
+                            <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+                        }
+                        <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
+                    </td>
             </tr>
         }
     </tbody>
